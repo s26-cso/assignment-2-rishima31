@@ -132,6 +132,7 @@ getAtMost:
     addi sp,sp,-32
     sd ra,24(sp)            # save return address
     sd a0,16(sp)            # save val
+    sd x0,0(sp)             # initialize predecessor = NULL
 
     beq a1,x0,end           # if root==NULL, end
 
@@ -139,33 +140,15 @@ getAtMost:
 
 loop:
     ld t0,8(sp)             # load curr
-    ld a0,16(sp)            # a0 = val
-
     beq t0,x0,check_end     # if curr==NULL, go to check_end
 
-    lw t1,0(t0)             # t1 = root->val
-
-    bgt a0,t1,right         # if val > root->val go right
-    blt a0,t1,left          # if val < root->val go left
+    ld a0,16(sp)            # a0 = val
+    lw t1,0(t0)             # t1 = curr->val
 
     beq a0,t1,pred          # if val==root->val go to pred
 
-check_end:
-    ld t0,0(sp)             # load value of predecessor
-
-    beq t0,x0,pred_end      # if t0==NULL, end
-    lw t1,0(t0)             # t1 = predecessor->val
-
-    mv a0,t1                # a0 = t1
-    ld ra,24(sp)
-    addi sp,sp,32
-    ret
-
-pred_end:
-    li a0,-1                # return -1
-    ld ra,24(sp)
-    addi sp,sp,32
-    ret
+    bgt a0,t1,right         # if val > root->val go right
+    j left                  # val < root->val go left
 
 right:
     ld t0,8(sp)             # load curr
@@ -185,7 +168,23 @@ left:
     j loop                  # run loop again
 
 pred:
-    ld t0,8(sp)             # load curr
-    sd t0,0(sp)             # save curr as predecessor
+    ld t0,8(sp)
+    lw a0,0(t0)             # return curr->val directly
+    ld ra,24(sp)
+    addi sp,sp,32
+    ret
 
-    j check_end
+check_end:
+    ld t0,0(sp)             # t0 = predecessor
+    beq t0,x0,end           # if NULL, no valid answer
+
+    lw a0,0(t0)             # return predecessor->val
+    ld ra,24(sp)
+    addi sp,sp,32
+    ret
+
+end:
+    li a0,-1
+    ld ra,24(sp)
+    addi sp,sp,32
+    ret
