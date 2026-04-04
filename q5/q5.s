@@ -128,8 +128,8 @@ not_pal_end:
     li a7,64              # write syscall
     ecall
 
-    li a0,0              # exit code 0
-    li a7,93             # exit syscall
+    li a0,0               # exit code 0
+    li a7,93              # exit syscall
     ecall
 
 
