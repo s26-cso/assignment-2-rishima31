@@ -35,7 +35,7 @@ store_loop:
     ld s1,32(sp)
     bgt t0,s1,main_loop_helper  # if i > n go to main_loop
 
-    li t1,8
+    li t1,8                     # t1 = 8
     mul t1,t0,t1                # t1 = i*8 (pointers = 8 bytes)
     ld t4,40(sp)                # t4 = &arg
     add t5,t4,t1                # t5 = &arg[i]
