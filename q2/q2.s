@@ -89,10 +89,10 @@ while_loop:
     add t4,t5,t4                # t4 = &arr[stack[top]]
     lw t6,0(t4)                 # t6 = arr[stack[top]]
 
-    ld t4,24(sp)        # t4 = &arr
-    slli t5,t0,2        # t5 = i*4
-    add t4,t4,t5        # t4 = &arr[i]
-    lw t5,0(t4)         # t5 = arr[i]
+    ld t4,24(sp)                # t4 = &arr
+    slli t5,t0,2                # t5 = i*4
+    add t4,t4,t5                # t4 = &arr[i]
+    lw t5,0(t4)                 # t5 = arr[i]
 
     ble t6,t5,pop               # if arr[stack[top]] <= arr[i], pop
     j end_while                 # else end while loop
