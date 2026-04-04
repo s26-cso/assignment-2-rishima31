@@ -1,6 +1,8 @@
 .section .rodata
 fmt:
     .asciz "%d "
+fmt_nl:
+    .asciz "%d\n"
 
 .global main
 
@@ -162,6 +164,9 @@ end_loop:
     add t2,t3,t2                # t2 = &result[i]
     lw t3,0(t2)                 # t3 = result[i] 
 
+    addi t4,t1,-1               # t4 = n-1
+    beq t0,t4,print_last        # if i == n-1, go to print_last
+
     la a0,fmt
     mv a1,t3                    
     call printf
@@ -170,6 +175,11 @@ end_loop:
     sd t0,0(sp)                # save i
 
     j end_loop
+
+print_last:
+    la a0,fmt_nl
+    mv a1,t3
+    call printf
 
 end:
     ld ra,48(sp)
