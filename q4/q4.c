@@ -7,12 +7,15 @@ typedef int (*fptr)(int, int);
 
 int main()
 {
-    while(1)
+    char line[256];
+
+    while(fgets(line, sizeof(line), stdin))
     {
         char op[6];
         int x,y;
 
-        scanf("%5s %d %d",op,&x,&y);
+        if (sscanf(line, "%5s %d %d", op, &x, &y) != 3) continue;
+        
 
         char lib[20];
         snprintf(lib,sizeof(lib),"./lib%s.so",op);
