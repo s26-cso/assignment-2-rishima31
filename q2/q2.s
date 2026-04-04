@@ -29,7 +29,7 @@ main:
     call malloc
     sd a0,8(sp)                 # save base address of stack arr 
 
-    li t0,1                     # t0 = 1 (i)
+    li t0,1                     # t0 = i = 1 
     sd t0,0(sp)                 # save i
 
 store_loop:
