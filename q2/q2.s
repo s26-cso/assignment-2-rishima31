@@ -177,7 +177,7 @@ end_loop:
     j end_loop
 
 print_last:
-    la a0,fmt_nl
+    la a0,fmt_nl               # print last element with "\n"
     mv a1,t3
     call printf
 
